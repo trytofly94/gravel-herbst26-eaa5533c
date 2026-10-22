@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#1e272e">
+<title>Gravel Herbst 26 · 28.–30.10.</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+:root{--bg:#f5f6fa;--card:#fff;--fg:#1e272e;--mut:#6b7785;--acc:#e4572e;--ok:#10ac84;--warn:#f3a712;--bad:#c0392b;--line:#e3e6ec;--tab:64px}
+@media (prefers-color-scheme:dark){:root{--bg:#12161a;--card:#1c2228;--fg:#eef1f4;--mut:#9aa5b1;--line:#2c343c}}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-text-size-adjust:100%}
+header{position:sticky;top:0;z-index:500;background:var(--fg);color:var(--bg);padding:calc(env(safe-area-inset-top) + 10px) 16px 10px}
+header h1{margin:0;font-size:17px}
+header p{margin:2px 0 0;font-size:12px;opacity:.75}
+main{padding:12px 12px calc(var(--tab) + env(safe-area-inset-bottom) + 16px)}
+section{display:none}
+section.on{display:block}
+nav{position:fixed;bottom:0;left:0;right:0;z-index:600;display:flex;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+nav button{flex:1;height:var(--tab);border:0;background:none;color:var(--mut);font-size:11px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+nav button span{font-size:21px}
+nav button.on{color:var(--acc);font-weight:600}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:0 0 12px}
+.card h2{font-size:17px;margin:0 0 6px}
+.card h3{font-size:15px;margin:12px 0 4px}
+.mut{color:var(--mut);font-size:13px}
+.pill{display:inline-block;font-size:12px;padding:2px 8px;border-radius:99px;background:var(--line);margin:2px 4px 2px 0}
+.pill.ok{background:#10ac8433;color:var(--ok)}.pill.warn{background:#f3a71233;color:#b9770e}.pill.bad{background:#c0392b26;color:var(--bad)}
+@media (prefers-color-scheme:dark){.pill.warn{color:var(--warn)}}
+.opt{display:flex;gap:10px;align-items:flex-start}
+.opt .rank{font-weight:700;font-size:22px;min-width:28px;text-align:center;color:var(--acc)}
+.opt .body{flex:1;min-width:0}
+.opt .arrows{display:flex;flex-direction:column;gap:6px}
+.opt .arrows button{width:40px;height:36px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--fg);font-size:18px}
+.opt.raus{opacity:.45}
+.stat{display:flex;gap:10px;flex-wrap:wrap;font-size:13px;margin:6px 0}
+.stat b{font-weight:600}
+.seg{display:flex;gap:6px;margin:8px 0 4px}
+.seg button{flex:1;padding:7px 0;border-radius:9px;border:1px solid var(--line);background:var(--bg);color:var(--fg);font-size:13px}
+.seg button.on[data-s=fav]{background:var(--ok);color:#fff;border-color:var(--ok)}
+.seg button.on[data-s=mb]{background:var(--warn);color:#000;border-color:var(--warn)}
+.seg button.on[data-s=raus]{background:var(--bad);color:#fff;border-color:var(--bad)}
+details{margin-top:6px}
+summary{cursor:pointer;color:var(--acc);font-size:14px}
+textarea{width:100%;min-height:56px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--fg);padding:8px;font:inherit;font-size:14px;margin-top:6px}
+.btn{display:inline-block;padding:10px 14px;border-radius:11px;border:0;background:var(--acc);color:#fff;font-size:15px;font-weight:600;text-decoration:none;margin:4px 6px 4px 0}
+.btn.sec{background:var(--line);color:var(--fg)}
+#map{height:calc(100vh - 210px);height:calc(100dvh - 210px);border-radius:14px;border:1px solid var(--line)}
+.mapbar{display:flex;gap:6px;overflow-x:auto;padding:0 0 8px;-webkit-overflow-scrolling:touch}
+.mapbar button{white-space:nowrap;padding:8px 12px;border-radius:99px;border:1px solid var(--line);background:var(--card);color:var(--fg);font-size:13px}
+.mapbar button.on{background:var(--fg);color:var(--bg)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+td,th{padding:6px 4px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{color:var(--mut);font-weight:500}
+.tl{border-left:3px solid var(--acc);padding-left:10px;margin:8px 0}
+.tl p{margin:4px 0}
+.chk{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--line)}
+.chk input{width:22px;height:22px;margin-top:1px;flex:none}
+.chk.done label{text-decoration:line-through;color:var(--mut)}
+.alert{border-left:4px solid var(--warn);background:#f3a7121a;padding:8px 10px;border-radius:8px;font-size:14px;margin:8px 0}
+.leaflet-popup-content{font-size:13px;line-height:1.4}
+a{color:var(--acc)}
+</style>
+</head>
+<body>
+<header>
+  <h1>Gravel Herbst 26 · Mi 28.–Fr 30.10.</h1>
+  <p>Stand 21.10.2026 · nichts gebucht · Fr fährt Niki mit</p>
+</header>
+<main>
+
+<!-- PRIORISIEREN -->
+<section id="s-prio" class="on">
+  <div class="card">
+    <h2>Priorisieren</h2>
+    <div class="mut">Mit ▲▼ sortieren und den Status setzen. Notizen werden nur auf diesem Gerät gespeichert. Mit „Teilen“ geht die Rangfolge als Text raus, z. B. an Claude.</div>
+    <div style="margin-top:8px">
+      <button class="btn" id="share">Rangfolge teilen</button>
+      <button class="btn sec" id="reset">Zurücksetzen</button>
+    </div>
+  </div>
+  <div id="optlist"></div>
+</section>
+
+<!-- KARTE -->
+<section id="s-map">
+  <div class="mapbar" id="mapbar">
+    <button data-v="A" class="on">Variante A</button>
+    <button data-v="B">Variante B</button>
+    <button data-v="R">Alle Regionen</button>
+    <button data-v="me">📍 Ich</button>
+  </div>
+  <div id="map"></div>
+  <div class="mut" style="margin-top:6px">Tracks maschinell geplant (BRouter), nicht abgefahren. Strecke antippen zeigt Infos und GPX.</div>
+</section>
+
+<!-- VARIANTE A -->
+<section id="s-a">
+  <div class="card">
+    <h2>A · Köln → Wahner Heide → Sieg → Siebengebirge → Ahr</h2>
+    <span class="pill ok">Empfehlung</span><span class="pill">keine Anreise</span><span class="pill">Niki: 43 min direkt</span>
+    <table style="margin-top:8px">
+      <tr><th>Tag</th><th>Etappe</th><th>km</th><th>Hm</th><th>Schotter</th></tr>
+      <tr><td>Mi</td><td>Köln Hbf → Königsforst → Wahner Heide → Siegaue → Stadt Blankenberg</td><td>53,6</td><td>243</td><td>35 %</td></tr>
+      <tr><td>Do</td><td>Blankenberg → Pleiser Hügelland → Heisterbach → Königswinter → Bad Honnef</td><td>31,7</td><td>394</td><td>30 %</td></tr>
+      <tr><td>Fr</td><td>Lennart: Bad Honnef → Fähre → Rolandseck → Remagen Bf</td><td>9,5</td><td>13</td><td>5 %</td></tr>
+      <tr><td>Fr</td><td><b>mit Niki:</b> Remagen → Sinzig → Ahr → Ahrweiler (+ Dernau 6 km)</td><td>19,6</td><td>54</td><td>7 %</td></tr>
+    </table>
+    <div class="alert">Die rechte Rheinstrecke ist bis 12.12.2026 gesperrt, es fahren nur Ersatzbusse mit Radmitnahme „nicht garantiert“. Treffpunkt ist deshalb links des Rheins in Remagen.</div>
+    <h3>Unterkünfte</h3>
+    <p class="mut"><b>Nacht Mi (Hennef):</b> Landhaus Süchterscheid, EZ 59 €, per Buchungsmaschine frei. Storno ab 14 Tagen vorher 100 %. ⚠️ Laut OpenStreetMap liegt die Adresse Mühlental 3 rund 4–5 km vom Etappenende Blankenberg, nicht 1 km, dazu eher bergauf. Beim Anruf klären. Ausweichen: Hotel Marktterrassen am Bf Hennef (EZ ab 84 €, nicht datiert belegt).</p>
+    <p class="mut"><b>Nacht Do (Bad Honnef):</b> Weinhaus Hoff in Rhöndorf (DZ 95 €), the YARD in Bad Honnef (DZ 76 €). Oder Königswinter: Hotel Krone (EZ 68–75 €), Storyhotel (84 €). Bei Königswinter am Fr die Fähre nach Mehlem nehmen, 12,7 km bis Remagen. Alle über booking.com für 29.→30.10. frei.</p>
+    <h3>Alternativen</h3>
+    <p class="mut">Do über Ittenbach: 38 km, aber 542 Hm, über der Grenze. Fr statt Ahr links am Rhein nach Andernach: 23 km, Direktzug nach Köln.</p>
+  </div>
+</section>
+
+<!-- VARIANTE B -->
+<section id="s-b">
+  <div class="card">
+    <h2>B · Lahn flussabwärts, Leun → Limburg → Nassau → Koblenz</h2>
+    <span class="pill warn">Do an der Hm-Grenze</span><span class="pill">Anreise ca. 3 h 15</span><span class="pill">Niki: 1 h 54</span>
+    <table style="margin-top:8px">
+      <tr><th>Tag</th><th>Etappe</th><th>km</th><th>Hm</th><th>Schotter</th></tr>
+      <tr><td>Mi</td><td>Bf Leun/Braunfels → Weilburg → Villmar → Runkel → Limburg</td><td>52,4</td><td>204</td><td>6 %</td></tr>
+      <tr><td>Do</td><td>Limburg → Diez → Balduinstein → Obernhof → Nassau</td><td>40,0</td><td>400–590</td><td>14 %</td></tr>
+      <tr><td>Fr</td><td><b>mit Niki:</b> Nassau → Bad Ems → Lahnstein → Koblenz Hbf</td><td>31,2</td><td>125</td><td>2 %</td></tr>
+    </table>
+    <h3>Bahn</h3>
+    <p class="mut"><b>Hin Mi:</b> Köln 07:32 RE → Koblenz 08:42 / 08:57 RE25 → Wetzlar 10:32 / 10:36 RB → Leun 10:47. Nur Regionalzüge, Rad „begrenzt“, keine Reservierung.<br><b>Zurück Fr:</b> Koblenz 14:16 RE5 → Köln 15:28, direkt.</p>
+    <h3>Unterkünfte</h3>
+    <p class="mut"><b>Nacht Mi:</b> Nassauer Hof Limburg (Mi 183 €, Fahrradgarage, Mi Ruhetag), Hotel am Bahnhof Weilburg (60 €, Bett+Bike), Lahnschleife Weilburg (99 €).<br><b>Nacht Do:</b> Lahnromantik Nassau (EZ 88–120 €, Bett+Bike), Wilhelm von Nassau in Diez (94–110 €, nur Notlösung).</p>
+  </div>
+</section>
+
+<!-- FREITAG -->
+<section id="s-fr">
+  <div class="card">
+    <h2>Freitag mit Niki · Variante A</h2>
+    <div class="tl">
+      <p><b>~08:30</b> Lennart: Fähre Bad Honnef → Rolandseck (Mo–Sa ab 06:30), dann links am Rhein über Oberwinter nach Remagen, 9,5 km</p>
+      <p><b>08:32</b> Niki: RE5 ab Köln Hbf, direkt</p>
+      <p><b>09:15</b> Treffpunkt Remagen Bf</p>
+      <p><b>~09:30</b> gemeinsam los: Sinzig, Ahr-Radweg, Bad Neuenahr</p>
+      <p><b>~11:00</b> Ahrweiler Altstadt, Mittagessen. Optional weiter nach Dernau (+6 km)</p>
+      <p><b>12:55 / 13:55</b> Ahrtalbahn → Remagen → RE5 → Köln an 14:28 / 15:28</p>
+    </div>
+    <table>
+      <tr><th>Niki ab Köln</th><th>Zug</th><th>an Remagen</th></tr>
+      <tr><td>07:32</td><td>RE5</td><td>08:15</td></tr>
+      <tr><td><b>08:32</b></td><td>RE5</td><td><b>09:15</b></td></tr>
+      <tr><td>08:56</td><td>RB26</td><td>09:46</td></tr>
+      <tr><td>09:32</td><td>RE5</td><td>10:15</td></tr>
+    </table>
+    <p class="mut">Radmitnahme überall „begrenzt“, ohne Reservierung. Die Ahrtalbahn ist freitags im Oktober voll, besser vor 14 Uhr fahren. Ticket: Deutschlandticket + Fahrradtageskarte. Fahrpläne aus Transitous, nicht aus bahn.de.</p>
+  </div>
+  <div class="card">
+    <h2>Freitag mit Niki · Variante B</h2>
+    <p class="mut">Niki: Köln 07:32 RE5 → Koblenz 08:42 / 08:57 RE25 → Nassau 09:26 (1 Umstieg). Etappe 31 km flach, an Koblenz gegen 13:30, RE5 14:16 direkt → Köln 15:28. Kürzer: Treffpunkt Bad Ems (an 09:15, ~22 km).</p>
+  </div>
+</section>
+
+<!-- TODO -->
+<section id="s-todo">
+  <div class="card">
+    <h2>Offen / selbst klären</h2>
+    <div id="todos"></div>
+  </div>
+  <div class="card">
+    <h2>GPX-Dateien</h2>
+    <div id="gpxlist" class="mut"></div>
+  </div>
+</section>
+
+</main>
+
+<nav id="nav">
+  <button data-s="prio" class="on"><span>⭐</span>Prio</button>
+  <button data-s="map"><span>🗺️</span>Karte</button>
+  <button data-s="a"><span>🅰️</span>A</button>
+  <button data-s="b"><span>🅱️</span>B</button>
+  <button data-s="fr"><span>👫</span>Freitag</button>
+  <button data-s="todo"><span>✅</span>To-do</button>
+</nav>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="data.js"></script>
+<script>
+const OPTS=[
+ {id:"A",name:"A · Rhein/Sieg/Siebengebirge/Ahr",tag:"durchgerechnet",lat:50.72,lon:7.25,km:"115",hm:"243 / 394 / 67",gravel:"30–35 % (Mi/Do)",anreise:"keine (ab Haustür)",niki:"43 min direkt (Remagen)",pro:"Viel Schotter an Tag 1–2, keine Anreise, Ahrtal am Freitag. Reddit lobt Wahner Heide und „south of Bonn“.",con:"Do und Fr kürzer als gewünscht. Hennef hat nur 1 belegtes Haus.",link:""},
+ {id:"B",name:"B · Lahn Leun → Koblenz",tag:"durchgerechnet",lat:50.38,lon:8.0,km:"124",hm:"204 / 400–590 / 125",gravel:"6–14 %",anreise:"RE ca. 3 h 15, 2 Umstiege",niki:"1 h 54, 1 Umstieg",pro:"Landschaftlich geschlossenes Flusstal, Bett+Bike-Häuser.",con:"Fast nur Asphalt. Do an oder über der Hm-Grenze.",link:""},
+ {id:"VEL",name:"Veluwe (NL) · Apeldoorn/Het Loo",tag:"recherchiert",lat:52.21,lon:5.95,km:"–",hm:"fast flach",gravel:"sehr viel (Schotter/Sand)",anreise:"ca. 3–3,5 h Regionalzug (geschätzt)",niki:"weit (ca. 3 h)",pro:"Reddit: „long stretches of champagne gravel … nothing in NL comes close“.",con:"Lange Anreise. Veluwezoom: viele Naturwege für Räder verboten. Hoge Veluwe: Brunft, Eintritt.",link:"https://www.komoot.it/it-it/collection/1147238/-bikepacking-veluwe"},
+ {id:"HK",name:"Hoge Kempen (BE)",tag:"recherchiert",lat:51.01,lon:5.6,km:"–",hm:"170–280 je Tour",gravel:"bis 87 % unbefestigt",anreise:"ca. 3–3,5 h über Aachen, SNCB-Radticket",niki:"weit",pro:"Gravelroute As–Oudsbergen mit 87 % unbefestigt, Komoot-Touren mit 4,5–4,7 ★.",con:"Nur Rundtouren, Strecke von Ort zu Ort selbst bauen. Nach Regen matschig.",link:"https://sporza.be/nl/2025/05/27/ontdek-de-onverhard-gravelroute-in-as-en-oudsbergen-37-km~1748345933530/"},
+ {id:"MS",name:"Münsterland Gravel-Transversale",tag:"recherchiert",lat:51.85,lon:7.45,km:"200 (gesamt)",hm:"870 gesamt",gravel:"unbekannt",anreise:"RE ca. 1,5–2 h",niki:"gut (Münster/Greven)",pro:"Offizielle Mehrtagesroute, an jedem Etappenort ein Bahnhof, kurze Anreise.",con:"Schotteranteil und Bewertungen unbelegt. Tonböden nach Regen schmierig.",link:"https://www.nrw-tourism.com/graveltour-muensterland-experience-nature-water-and-cultural-history"},
+ {id:"LH",name:"Lüneburger Heide",tag:"recherchiert",lat:53.0,lon:9.85,km:"203 (Collection)",hm:"310 / 350 / 310",gravel:"bis 70 % unbefestigt",anreise:"ICE ca. 4 h, Radreservierung Pflicht",niki:"zu weit",pro:"bikepacking.com: im Herbst „flowy, fast riding“ auf festem Sand.",con:"Weite Anreise, Heideblüte vorbei, Etappen müssten gekürzt werden.",link:"https://www.komoot.nl/collection/809/purple-heather-and-pale-grey-gravel-lueneburg-heath-by-bike"},
+ {id:"MD",name:"Niederrhein / Maasduinen",tag:"recherchiert",lat:51.58,lon:6.2,km:"55 (Runde)",hm:"90",gravel:"eher befestigt",anreise:"RE ca. 2 h",niki:"gut",pro:"Sehr flach, Start am Bahnhof Kevelaer, 4,6 ★.",con:"Wenig echter Schotter.",link:"https://www.komoot.com/smarttour/26040658"},
+ {id:"UH",name:"Utrechtse Heuvelrug (NL)",tag:"recherchiert",lat:52.05,lon:5.35,km:"–",hm:"mäßig",gravel:"viel",anreise:"ca. 3 h, NS",niki:"weit",pro:"15 Touren, 138 Likes, dichtes Bahnnetz.",con:"Meist als „schwierig“ eingestuft.",link:"https://www.komoot.com/fr-fr/collection/1099759/-gravel-utrechtse-heuvelrug-2-0"},
+ {id:"MO",name:"Mosel (Genuss)",tag:"Runde 1",lat:50.1,lon:7.15,km:"–",hm:"flach",gravel:"kaum",anreise:"RE ca. 2 h",niki:"ok",pro:"Weinorte, Ende der Weinlese.",con:"Kaum Schotter, Bewertung 5/10.",link:""},
+ {id:"VB",name:"Vennbahn (Aachen → Troisvierges)",tag:"Plan B",lat:50.45,lon:6.15,km:"125",hm:"sanft",gravel:"Asphalt",anreise:"RE ca. 1 h nach Aachen",niki:"ok",pro:"Herbstfarben im Hohen Venn, gleichmäßige Steigung.",con:"Asphalt, kein Gravel. Rückfahrt aus Luxemburg lang.",link:"https://www.eifel.info/en/touren/the-vennbahn"},
+ {id:"EI",name:"Eifel-Gravel / Hohes Venn",tag:"ausgeschieden",lat:50.5,lon:6.5,km:"–",hm:"1.000–1.600 pro Tag",gravel:"viel",anreise:"ca. 1 h",niki:"–",pro:"Auf Reddit am häufigsten empfohlen.",con:"Weit über der Hm-Grenze, Matsch.",link:"https://komoot.com/user/eifelgraveller"}
+];
+const DEFAULT_STATUS={EI:"raus",VB:"mb",MO:"mb"};
+const TODOS=[
+ "Süchterscheid anrufen: Zimmer frei? Wo steht das Rad? Abendessen? Wie weit ist es wirklich von Blankenberg (OSM sagt 4–5 km)?",
+ "Nacht Do: Weinhaus Hoff / the YARD nach Radunterstellung fragen",
+ "Fähre Bad Honnef–Rolandseck: Fr-Morgen-Betrieb bestätigen (Tel. 02224 2560)",
+ "Niki: Deutschlandticket + Fahrradtageskarte",
+ "Track A3b (Ortsdurchfahrten Sinzig) vorher in Komoot ansehen",
+ "Entscheidung: A, B oder eine neue Region durchrechnen lassen",
+ "Wetter/Nebel ab Mo 26.10. prüfen (Fähren!)"
+];
+const LS="gravel26-v1";
+let st=JSON.parse(localStorage.getItem(LS)||"null")||{order:OPTS.map(o=>o.id),status:{...DEFAULT_STATUS},notes:{},todo:{}};
+OPTS.forEach(o=>{if(!st.order.includes(o.id))st.order.push(o.id)});
+const save=()=>localStorage.setItem(LS,JSON.stringify(st));
+const byId=Object.fromEntries(OPTS.map(o=>[o.id,o]));
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function renderOpts(){
+  const el=document.getElementById("optlist");el.innerHTML="";
+  st.order.forEach((id,i)=>{
+    const o=byId[id];if(!o)return;const s=st.status[id]||"";
+    const d=document.createElement("div");d.className="card opt"+(s==="raus"?" raus":"");
+    d.innerHTML=`<div class="rank">${i+1}</div>
+    <div class="body"><h2>${esc(o.name)}</h2><span class="pill">${esc(o.tag)}</span>
+    <div class="stat"><span>⛰ <b>${esc(o.hm)}</b> Hm</span><span>🪨 <b>${esc(o.gravel)}</b></span></div>
+    <div class="stat"><span>🚆 ${esc(o.anreise)}</span><span>👫 ${esc(o.niki)}</span></div>
+    <div class="seg">${[["fav","Favorit"],["mb","Vielleicht"],["raus","Raus"]].map(([k,l])=>`<button data-s="${k}" class="${s===k?"on":""}">${l}</button>`).join("")}</div>
+    <details><summary>Details & Notiz</summary>
+      <p class="mut">👍 ${esc(o.pro)}<br>👎 ${esc(o.con)}</p>
+      ${o.link?`<a href="${o.link}" target="_blank" rel="noopener">Route/Quelle öffnen ↗</a>`:""}
+      <a href="#" data-goto="${id}" style="margin-left:10px">Auf Karte ↗</a>
+      <textarea placeholder="Notiz …">${esc(st.notes[id]||"")}</textarea>
+    </details></div>
+    <div class="arrows"><button data-m="-1" aria-label="hoch">▲</button><button data-m="1" aria-label="runter">▼</button></div>`;
+    d.querySelectorAll(".arrows button").forEach(b=>b.onclick=()=>{const j=i+ +b.dataset.m;if(j<0||j>=st.order.length)return;[st.order[i],st.order[j]]=[st.order[j],st.order[i]];save();renderOpts();});
+    d.querySelectorAll(".seg button").forEach(b=>b.onclick=()=>{st.status[id]=st.status[id]===b.dataset.s?"":b.dataset.s;save();renderOpts();});
+    d.querySelector("textarea").oninput=e=>{st.notes[id]=e.target.value;save();};
+    d.querySelector("[data-goto]").onclick=e=>{e.preventDefault();show("map");setTimeout(()=>{map.setView([o.lat,o.lon],o.id==="A"||o.id==="B"?10:9);regionMarkers[id]&&regionMarkers[id].openPopup();},150);};
+    el.appendChild(d);
+  });
+}
+function shareText(){
+  const lab={fav:"⭐ Favorit",mb:"? Vielleicht",raus:"✗ Raus"};
+  return "Gravel Herbst 26 – meine Priorisierung:\n"+st.order.map((id,i)=>`${i+1}. ${byId[id].name}${st.status[id]?" ["+lab[st.status[id]]+"]":""}${st.notes[id]?" – "+st.notes[id]:""}`).join("\n");
+}
+document.getElementById("share").onclick=async()=>{const t=shareText();
+  if(navigator.share){try{await navigator.share({text:t});return}catch(e){}}
+  try{await navigator.clipboard.writeText(t);alertMsg("In die Zwischenablage kopiert");}catch(e){prompt("Kopieren:",t);}};
+document.getElementById("reset").onclick=()=>{st.order=OPTS.map(o=>o.id);st.status={...DEFAULT_STATUS};save();renderOpts();};
+function alertMsg(m){const b=document.getElementById("share");const o=b.textContent;b.textContent=m;setTimeout(()=>b.textContent=o,1800);}
+
+function renderTodos(){
+  const el=document.getElementById("todos");el.innerHTML="";
+  TODOS.forEach((t,i)=>{const d=document.createElement("div");d.className="chk"+(st.todo[i]?" done":"");
+    d.innerHTML=`<input type="checkbox" id="t${i}" ${st.todo[i]?"checked":""}><label for="t${i}">${esc(t)}</label>`;
+    d.querySelector("input").onchange=e=>{st.todo[i]=e.target.checked;save();renderTodos();};el.appendChild(d);});
+  document.getElementById("gpxlist").innerHTML=TRACKS.map(t=>`<div style="padding:5px 0"><span style="display:inline-block;width:10px;height:10px;border-radius:5px;background:${t.color}"></span> <a href="gpx/${t.file}" download>${esc(t.name)}</a><br><span class="mut">${esc(t.stats)}</span></div>`).join("");
+}
+
+// Navigation
+function show(s){document.querySelectorAll("section").forEach(x=>x.classList.toggle("on",x.id==="s-"+s));
+  document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.s===s));
+  if(s==="map"){initMap();setTimeout(()=>map.invalidateSize(),60);} window.scrollTo(0,0);}
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>show(b.dataset.s));
+
+// Karte
+let map,layers={},regionMarkers={};
+const POIS=[
+ ["A","bed","Landhaus Süchterscheid (Nacht Mi)","Mühlental 3, Hennef · EZ 59 € · ⚠️ 4–5 km von Blankenberg",50.7477,7.3874],
+ ["A","bed","Hotel Marktterrassen (Ausweich Mi)","Frankfurter Str. 98, Hennef · EZ ab 84 €",50.7748,7.2850],
+ ["A","bed","Hotel Weinhaus Hoff (Nacht Do)","Rhöndorf · DZ 95 €",50.6595,7.2134],
+ ["A","bed","Hotel the YARD (Nacht Do)","Bad Honnef · DZ 76 € inkl. Frühstück",50.6474,7.2231],
+ ["A","bed","Das Hotel Krone (Nacht Do)","Königswinter · EZ 68–75 €",50.6753,7.1929],
+ ["A","bed","Storyhotel Bergischer Hof (Nacht Do)","Königswinter · DZ 84 €",50.6745,7.1954],
+ ["A","ferry","Fähre Bad Honnef ↔ Rolandseck","Mo–Sa 06:30–21:00",50.6318,7.2110],
+ ["A","ferry","Fähre Königswinter ↔ Mehlem","alle 15 min",50.6731,7.1922],
+ ["A","meet","Treffpunkt Remagen Bf","Niki RE5 Köln 08:32 → 09:15",50.5770,7.2310],
+ ["A","train","Bad Neuenahr-Ahrweiler Bf","Ahrtalbahn → Remagen → Köln",50.5418,7.0952],
+ ["A","train","Dernau Bf","7 min früher als Ahrweiler",50.5320,7.0450],
+ ["B","train","Bf Leun/Braunfels","Ankunft Mi 10:47",50.5510,8.3580],
+ ["B","bed","Hotel Nassauer Hof Limburg (Nacht Mi)","Mi 183 € · Fahrradgarage · Mi Ruhetag",50.3901,8.0646],
+ ["B","bed","Hotel am Bahnhof Weilburg (Nacht Mi)","EZ 60 € · Bett+Bike",50.4863,8.2677],
+ ["B","bed","Hotel Lahnschleife Weilburg","DZ-EZ ab 99 €",50.4875,8.2597],
+ ["B","bed","Lahnromantik Nassau (Nacht Do)","EZ 88–120 € · Bett+Bike",50.3069,7.7960],
+ ["B","bed","Wilhelm von Nassau, Diez","94–110 € · Notlösung",50.3704,8.0328],
+ ["B","meet","Treffpunkt Nassau (Lahn) Bf","Niki an 09:26",50.3146,7.8019],
+ ["B","train","Koblenz Hbf","RE5 14:16 → Köln 15:28",50.3510,7.5890]
+];
+const ICON={bed:"🛏️",ferry:"⛴️",meet:"👫",train:"🚆"};
+function emo(e){return L.divIcon({className:"",html:`<div style="font-size:22px;line-height:22px;filter:drop-shadow(0 1px 1px #0008)">${e}</div>`,iconSize:[24,24],iconAnchor:[12,12]});}
+function initMap(){
+  if(map)return;
+  map=L.map("map",{zoomControl:true,tap:true});
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:18,attribution:"© OpenStreetMap"}).addTo(map);
+  ["A","B","R"].forEach(k=>layers[k]=L.featureGroup());
+  TRACKS.forEach(t=>{const pl=L.polyline(t.pts,{color:t.color,weight:5,opacity:.9});
+    pl.bindPopup(`<b>${esc(t.name)}</b><br>${esc(t.stats)}<br><a href="gpx/${t.file}" download>GPX laden</a>`);pl.addTo(layers[t.variant]);});
+  POIS.forEach(([v,k,n,d,la,lo])=>L.marker([la,lo],{icon:emo(ICON[k])}).bindPopup(`<b>${esc(n)}</b><br>${esc(d)}`).addTo(layers[v]));
+  L.marker([50.943,6.9587],{icon:emo("🏠")}).bindPopup("<b>Köln Hbf</b>").addTo(layers.R);
+  OPTS.forEach(o=>{const s=st.status[o.id];const c=s==="fav"?"#10ac84":s==="raus"?"#c0392b":s==="mb"?"#f3a712":"#e4572e";
+    const m=L.circleMarker([o.lat,o.lon],{radius:11,color:"#fff",weight:2,fillColor:c,fillOpacity:.95})
+      .bindPopup(`<b>${esc(o.name)}</b><br>⛰ ${esc(o.hm)} · 🪨 ${esc(o.gravel)}<br>🚆 ${esc(o.anreise)}<br>👫 ${esc(o.niki)}${o.link?`<br><a href="${o.link}" target="_blank" rel="noopener">Quelle ↗</a>`:""}`);
+    m.addTo(layers.R);regionMarkers[o.id]=m;});
+  layers.A.addTo(map);layers.B.addTo(map);layers.R.addTo(map);
+  map.fitBounds(layers.A.getBounds(),{padding:[20,20]});
+}
+document.querySelectorAll("#mapbar button").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll("#mapbar button").forEach(x=>x.classList.toggle("on",x===b));
+  const v=b.dataset.v;
+  if(v==="me"){map.locate({setView:true,maxZoom:13});map.once("locationfound",e=>L.circleMarker(e.latlng,{radius:8,color:"#2e86de"}).addTo(map));return;}
+  map.fitBounds(layers[v].getBounds(),{padding:[20,20]});
+});
+
+renderOpts();renderTodos();
+</script>
+</body>
+</html>
