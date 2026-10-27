@@ -43,6 +43,7 @@ ul.todo{padding-left:20px;margin:4px 0}ul.todo li{margin:4px 0}
 <h2>Kurz gesagt</h2>
 <p><b>Empfehlung: Maas · Meinweg · Hoge Kempen, Variante A.</b> Mittwoch mit dem Zug nach Dalheim, durch den Nationalpark Meinweg und an den Maasplassen entlang nach Thorn bzw. Maasbracht. Donnerstag ein kurzer Tag über Maaseik und die Grensmaas nach Terhills/Maasmechelen, mit optionaler Heide-Schleife. Freitag mit Niki durch die Hoge Kempen nach Maastricht zur Freundin, Samstag durchs Geultal nach Aachen und mit dem RE heim.</p>
 <p>Alle Tage bleiben unter 60 km und fast flach, die Fahrzeit liegt bei 13 km/h zwischen 3 und 4½ Stunden. Niki braucht keinen Zug: Sie fährt mit dem Auto nach Maastricht und von dort 26 km per Rad zu dir.</p>
+<p><b>Neu: Kurzfassung mit nur zwei Tagen</b> (Mi und Do, Nacht bei Freunden in der Bonner Südstadt), ab der Haustür ohne Zug und ohne Buchung, in zwei Richtungen: KB2 „Heide hin, Ville zurück“ (empfohlen, weil der Wald jeweils vorne liegt) und KB1 umgekehrt. Beide Tage 55–59 km, gut 4 Stunden Fahrzeit.</p>
 <p class="mut">Wetter Mi–Sa (Open-Meteo): trocken, 2–15 °C, wenig Wind, morgens Nebel. Maas-Abfluss (GloFAS-Modell): Spitze 182 m³/s am Di, danach fallend auf 123 (Do) und 75 (Sa), also kein Hochwasser zu erwarten. Seit der Zeitumstellung geht die Sonne gegen 17:15 unter, ab 18 Uhr ist es dunkel.</p>
 </section>
 
@@ -118,19 +119,33 @@ S2L:{name:"S2 lang (Köln–Bonn)",short:"S2L",stays:false,
   {d:1,files:["S2L-1-"],t:"Per Rad ab Köln über die Ville-Seen und den Kottenforst nach Bad Godesberg, durch die Rheinaue in die Bonner Südstadt (Freunde)."},
   {d:2,files:["S2L-2-"],t:"Bonn → Remagen → Fähre Linz → Annatal → Löwenburg → Heisterbach → Ennert → Siegburg. Der härteste Tag aller Varianten."},
   {d:3,files:["S2L-3-"],t:"Mit Niki (RE9 08:22 → Siegburg 08:45): Agger und Sülz, Lohmarer Wald, Wahner Heide, Königsforst, Köln Hbf."}],
- risks:[["ok","keine Anreise"],["bad","Do 75 km / 497 Hm"],["warn","Waldwege nach Regen weich"],["warn","wenig Neues"]]}
+ risks:[["ok","keine Anreise"],["bad","Do 75 km / 497 Hm"],["warn","Waldwege nach Regen weich"],["warn","wenig Neues"]]},
+KB2:{name:"2 Tage Bonn · Heide hin, Ville zurück",short:"KB2",stays:false,
+ stayNote:"Mi→Do bei den Freunden in der Bonner Südstadt, keine Buchung nötig.",
+ sum:"Nur Mi und Do, ab der Haustür und zurück, mit einer Nacht bei den Freunden in der Südstadt. Mittwoch rechtsrheinisch fast flach durch Königsforst und Wahner Heide nach Siegburg und über den Ennert mit Blick aufs Siebengebirge nach Bonn. Donnerstag mit frischen Beinen zuerst den Venusberg hinauf, dann durch Kottenforst und an den Ville-Seen entlang zurück nach Köln. Der Wald liegt so jeweils vorne, das letzte Stück führt durch Stadt und Feld.",
+ days:[
+  {d:1,files:["KB2-1-"],t:"Köln → Königsforst → Wahner Heide (Heide und Sandwege, überwiegend fest) → Siegburg (Michaelsberg, gut zum Mittagessen) → über den Ennert mit Blick aufs Siebengebirge → Beuel → über den Rhein in die Südstadt. Nur 170 Hm.",train:"Abkürzen: ab Troisdorf oder Siegburg S12/RE9 nach Bonn-Beuel bzw. Bonn Hbf"},
+  {d:2,files:["KB2-2-"],t:"Bonn-Südstadt → Venusberg hinauf (der einzige längere Anstieg, gleich am Morgen) → Kottenforst → Ville-Seen (Heider Bergsee, Bleibtreusee) → Hürth → Köln. Die letzten 15 km sind Stadtrand und Grüngürtel.",train:"Abkürzen: ab Brühl oder Hürth-Kalscheuren mit RE/RB nach Köln"}],
+ risks:[["ok","kein Zug, keine Unterkunft"],["ok","Wald nicht am Schluss"],["ok","Mi flach"],["warn","Do 335 Hm, Venusberg"],["warn","wenig Neues"]]},
+KB1:{name:"2 Tage Bonn · Ville hin, Heide zurück",short:"KB1",stays:false,
+ stayNote:"Mi→Do bei den Freunden in der Bonner Südstadt, keine Buchung nötig.",
+ sum:"Dieselben Landschaften in umgekehrter Richtung. Mittwoch an den Ville-Seen entlang und durch den Kottenforst, am Ende über den Venusberg hinunter in die Südstadt. Donnerstag fast flach am Rhein und durch die Siegaue zur Wahner Heide und durch den Königsforst nach Köln. Der härtere Tag kommt zuerst, dafür liegen die Waldstücke eher am Tagesende.",
+ days:[
+  {d:1,files:["KB1-1-"],t:"Köln → Hürth → Ville-Seen → Kottenforst → Venusberg → Abfahrt in die Bonner Südstadt. 327 Hm, die meisten zwischen Kottenforst und Venusberg auf den letzten 15 km.",train:"Abkürzen: bis Brühl oder Hürth-Kalscheuren mit RE/RB"},
+  {d:2,files:["KB1-2-"],t:"Bonn-Südstadt → Kennedybrücke → Beuel → am Rhein zur Siegmündung → Siegaue → Wahner Heide → Königsforst → Köln. Nur 86 Hm.",train:"Abkürzen: ab Troisdorf S12/RE9 nach Köln"}],
+ risks:[["ok","kein Zug, keine Unterkunft"],["ok","Do flach"],["warn","Mi-Anstieg am Ende"],["warn","Wald am Tagesende"],["warn","wenig Neues"]]}
 };
 const CMP=[
- ["Tage auf dem Rad","4","4","3","3"],
- ["km je Tag","57 / 51 / 38 / 41","57 / 60 / 54 / 41","78 / 74 / 53","74 / 75 / 47"],
- ["Höhenmeter max.","202","202","480","497"],
- ["Schotter-Anteil","bis 42 %","bis 42 %","unter 7 %","20–49 %"],
- ["Natur","Heide, Dünen, Fluss","wie A","Maare, Weinberge","Wald, Rhein, Heide"],
- ["Komoot Lob / Warnung","24 % / 3 %","24 % / 3 %","11 % / 5 %*","13 % / 5 %"],
- ["Niki","Auto + 26 km Rad","schon in Maastricht","Zug nach Cochem","Zug nach Siegburg"],
- ["Unterkünfte","Mi 59–130 €, Do 51–119 €","Mi wie A, Do Freundin","nur Cochem geprüft","Freunde / Siegburg"],
- ["Heimweg","Aachen RE, 1 h","wie A","Koblenz RE5, 1:12 h","per Rad"]];
-const BEST={1:[0,1],2:[0,1],5:[0,1],6:[0,1]};
+ ["Tage auf dem Rad","4","4","3","3","2","2"],
+ ["km je Tag","57 / 51 / 38 / 41","57 / 60 / 54 / 41","78 / 74 / 53","74 / 75 / 47","55 / 58","59 / 56"],
+ ["Höhenmeter max.","202","202","480","497","335","327"],
+ ["Schotter-Anteil","bis 42 %","bis 42 %","unter 7 %","20–49 %","27–38 %","32–35 %"],
+ ["Natur","Heide, Dünen, Fluss","wie A","Maare, Weinberge","Wald, Rhein, Heide","Heide, Wald, Seen","wie KB2"],
+ ["Komoot Lob / Warnung","24 % / 3 %","24 % / 3 %","11 % / 5 %*","13 % / 5 %","nicht ausgewertet","nicht ausgewertet"],
+ ["Niki","Auto + 26 km Rad","schon in Maastricht","Zug nach Cochem","Zug nach Siegburg","—","—"],
+ ["Unterkünfte","Mi 59–130 €, Do 51–119 €","Mi wie A, Do Freundin","nur Cochem geprüft","Freunde / Siegburg","Freunde Südstadt","Freunde Südstadt"],
+ ["Heimweg","Aachen RE, 1 h","wie A","Koblenz RE5, 1:12 h","per Rad","per Rad","per Rad"]];
+const BEST={1:[0,1],2:[0,1],5:[0,1],6:[0,1],7:[4,5]};
 
 const map=L.map("map",{scrollWheelZoom:false});
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:18,attribution:"© OpenStreetMap"}).addTo(map);
@@ -174,7 +189,8 @@ function detail(opt){
    h+=ss.map(s=>`<div class="stay"><div><b>${esc(s.name)}</b> · ${esc(s.ort)} <span class="mut">(${esc(s.quelle)})</span><br><span class="small mut">${esc(s.bewertung)} · Rad: ${esc(s.rad)} · Frühstück: ${esc(s.fruehstueck)} · Storno: ${esc(s.storno)}</span><br><a class="small" href="${esc(s.link)}" target="_blank" rel="noopener">Angebot öffnen</a></div><div class="price">${s.preis_eur} €</div></div>`).join("");
   });
   if(opt==="MC")h+=`<p class="mut small">Do→Fr und Fr→Sa bei der Freundin in Maastricht.</p>`;
- } else h+=`<p class="mut small">Für diese Variante sind keine Unterkünfte online geprüft (Details in Recherche.md, Runde 8 bzw. 8b).</p>`;
+ } else if(v.stayNote) h+=`<h3>Unterkunft</h3><p class="small">${esc(v.stayNote)}</p>`;
+ else h+=`<p class="mut small">Für diese Variante sind keine Unterkünfte online geprüft (Details in Recherche.md, Runde 8 bzw. 8b).</p>`;
  document.getElementById("detail").innerHTML=h;
 }
 
