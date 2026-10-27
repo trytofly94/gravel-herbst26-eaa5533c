@@ -43,7 +43,8 @@ ul.todo{padding-left:20px;margin:4px 0}ul.todo li{margin:4px 0}
 <h2>Kurz gesagt</h2>
 <p><b>Empfehlung: Maas · Meinweg · Hoge Kempen, Variante A.</b> Mittwoch mit dem Zug nach Dalheim, durch den Nationalpark Meinweg und an den Maasplassen entlang nach Thorn bzw. Maasbracht. Donnerstag ein kurzer Tag über Maaseik und die Grensmaas nach Terhills/Maasmechelen, mit optionaler Heide-Schleife. Freitag mit Niki durch die Hoge Kempen nach Maastricht zur Freundin, Samstag durchs Geultal nach Aachen und mit dem RE heim.</p>
 <p>Alle Tage bleiben unter 60 km und fast flach, die Fahrzeit liegt bei 13 km/h zwischen 3 und 4½ Stunden. Niki braucht keinen Zug: Sie fährt mit dem Auto nach Maastricht und von dort 26 km per Rad zu dir.</p>
-<p><b>Kurzfassung mit nur zwei Tagen und Siebengebirge</b> (Mi und Do, Nacht bei Freunden in der Bonner Südstadt, ein Stück mit dem Zug): KB3 „Heide + Siebengebirge“ (empfohlen: Mi flach ab der Haustür, Do bei Sonne ins Siebengebirge, Zug ab Bad Godesberg heim) oder KB4 „Siebengebirge + Ville“ (Zug bis Siegburg, Do ab Bonn per Rad heim).</p>
+<p><b>Kurzfassung mit nur zwei Tagen und Siebengebirge</b> (Mi und Do, Nacht bei Freunden in der Bonner Südstadt, ein Stück mit dem Zug), drei Varianten: <b>KB5</b> mit dem Zug nach Remagen, Fähre nach Linz, Siebengebirge von Süden, Do flach heim. <b>KB3</b> Mi flach ab Haustür, Do bei Sonne ins Siebengebirge, Zug ab Bad Godesberg heim. <b>KB4</b> Zug bis Siegburg, Siebengebirge, Do über Vorgebirge und Ville heim.</p>
+<p class="mut small">Weitere Südteil-Varianten (andere Startbahnhöfe und Aufstiege ins Siebengebirge) werden gerade auf Komoot recherchiert.</p>
 <p class="mut">Wetter Mi–Sa (Open-Meteo): trocken, 2–15 °C, wenig Wind, morgens Nebel. Maas-Abfluss (GloFAS-Modell): Spitze 182 m³/s am Di, danach fallend auf 123 (Do) und 75 (Sa), also kein Hochwasser zu erwarten. Seit der Zeitumstellung geht die Sonne gegen 17:15 unter, ab 18 Uhr ist es dunkel.</p>
 </section>
 
@@ -120,6 +121,18 @@ S2L:{name:"S2 lang (Köln–Bonn)",short:"S2L",stays:false,
   {d:2,files:["S2L-2-"],t:"Bonn → Remagen → Fähre Linz → Annatal → Löwenburg → Heisterbach → Ennert → Siegburg. Der härteste Tag aller Varianten."},
   {d:3,files:["S2L-3-"],t:"Mit Niki (RE9 08:22 → Siegburg 08:45): Agger und Sülz, Lohmarer Wald, Wahner Heide, Königsforst, Köln Hbf."}],
  risks:[["ok","keine Anreise"],["bad","Do 75 km / 497 Hm"],["warn","Waldwege nach Regen weich"],["warn","wenig Neues"]]},
+KB5:{name:"2 Tage Bonn · Zug nach Süden, Siebengebirge, Heide heim",short:"KB5",stays:false,
+ stayNote:"Mi→Do bei den Freunden in der Bonner Südstadt, keine Buchung nötig.",
+ sum:"Mittwoch mit dem Zug nach Remagen, mit der Fähre nach Linz und am rechten Rheinufer über Unkel nach Bad Honnef. Dann durchs Annatal hinauf ins Siebengebirge, über Löwenburger Hof, Margarethenhöhe und Heisterbach und durch den Ennert hinunter nach Bonn. Donnerstag fast flach per Rad heim, an der Sieg entlang und durch Wahner Heide und Königsforst. Die ganze Tour läuft so in eine Richtung nach Norden. Der Zug kommt nur einmal morgens, der Bergtag liegt vorne und der Heimweg ist flach.",
+ days:[
+  {d:1,files:["KB5-1-"],t:"Zug Köln Hbf → Remagen. Am Rhein zur Fähre Kripp–Linz (alle 15 min) → Altstadt Linz (Fachwerk, gut für einen Kaffee) → Blick auf Burg Ockenfels → Erpel unter der Erpeler Ley (Marktplatz mit Fachwerk) → Unkel → Rheinbreitbach → Bad Honnef → Annatal bergauf (steil, mit Gepäck evtl. ein Stück schieben) → Löwenburger Hof → Margarethenhöhe → Klosterruine Heisterbach → Ennert → Beuel → Kennedybrücke → Südstadt. Die ersten ~17 km sind flacher Rheinradweg, die 460 Hm kommen alle danach.",
+   quotes:["„Man glaubt kaum, dass man nicht allzu weit von Köln-Bonn entfernt ist. Das mittlere Rheintal ist auf jeden Fall einen Besuch wert“ (Kripp, 2024)","„Ein wunderschöner Marktplatz mit vielen hübschen Fachwerkhäusern“ (Erpel, 2025)","„Idyllischer Waldweg durch den Ennert“"],
+   train:"RE5 Köln Hbf 08:32 → Remagen 09:17 (stündlich :32), alternativ RB26 :56 → :48"},
+  {d:2,files:["KB1-2-","KB2-2-"],t:"Bonn-Südstadt → Kennedybrücke → Beuel → am Rhein zur Siegmündung → Siegaue → Wahner Heide → Königsforst → Köln. Nur 86 Hm, gut für müde Beine nach dem Bergtag.",
+   alt:"Alternativ mit mehr Aussicht: über Venusberg, Vorgebirge und Ville-Seen heim (57,5 km, 335 Hm).",
+   quotes:["„Vom Aggerdamm hat man eine gute Aussicht auf die Aggerauen“","„Feinster Schotter und immer geradeaus; also mal Speedgraveln durch den Wald“"],
+   train:"Abkürzen: ab Troisdorf S12/RE9 nach Köln"}],
+ risks:[["ok","Rhein, Fähre, Siebengebirge"],["ok","Zug nur morgens"],["ok","Do flach"],["warn","Annatal steil bergauf"],["warn","Siebengebirge am grauen Mi"]]},
 KB3:{name:"2 Tage Bonn · Heide + Siebengebirge",short:"KB3",stays:false,
  stayNote:"Mi→Do bei den Freunden in der Bonner Südstadt, keine Buchung nötig.",
  sum:"Mittwoch ab der Haustür fast flach durch Königsforst, Wahner Heide und Aggeraue nach Siegburg und an der Sieg entlang nach Bonn. Donnerstag mit frischen Beinen und bei angesagtem Sonnenschein ins Siebengebirge: Ennert, Klosterruine Heisterbach, Margarethenhöhe, Löwenburger Hof, hinunter durchs Rhöndorfer Tal an den Rhein, mit der Fähre Rolandseck hinüber und vom Bahnhof Bad Godesberg mit dem RE5 heim. Der Bergtag ist kurz, und am Ende wartet der Zug.",
@@ -147,16 +160,16 @@ const COND_KB=`<h3>Wetter und Untergrund</h3>
 <p class="small">Mi 28.10.: trocken, 7–15 °C, Böen bis 28 km/h. Do 29.10.: sonnig, 5–14 °C, kaum Wind (Open-Meteo, Stand Di 27.10.). Sonnenuntergang 17:13.</p>
 <p class="small">Am Sonntag sind 17–33 mm Regen gefallen, in den letzten zehn Tagen rund 60 mm, und der Boden ist laut Modell noch feucht. Die Strecken bestehen trotzdem zu etwa zwei Dritteln aus Asphalt und Radwegen, der Rest ist überwiegend fester Schotter (Königsforst, Aggerdamm, Ville). Wirklich weich sind je Tag nur 3–6 km: in der Wahner Heide sandige Wege (trocknen schnell), im Kottenforst gut 2 km Waldboden (lehmig, nach Regen schmierig) und ein kurzes Stück in der Aggeraue bei Siegburg. Im Siebengebirge sind die Wege Schotter und Waldweg; die Abfahrt durchs Rhöndorfer Tal hat bis 15 % Gefälle, mit nassem Laub langsam fahren oder schieben. Radfahren ist im Naturschutzgebiet nur auf freigegebenen Wegen erlaubt (gelbes Dreieck); die Route nutzt die in Runde 5 geprüften Wege. Zwischen Ennert und Eulenberg weidet eine Ziegenherde mit Herdenschutzhunden. Im Oktober und November sind Drückjagden üblich, Absperrungen beachten. Am Wochenende gab es Sturmböen bis 70 km/h, im Wald kann also noch Bruchholz liegen. Nasses Laub auf den Abfahrten ist rutschig.</p>`;
 const CMP=[
- ["Tage auf dem Rad","4","4","3","3","2 (+ Zug heim)","2 (+ Zug hin)"],
- ["km je Tag","57 / 51 / 38 / 41","57 / 60 / 54 / 41","78 / 74 / 53","74 / 75 / 47","55 / 39","47 / 58"],
- ["Höhenmeter max.","202","202","480","497","490","490"],
- ["Schotter-Anteil","bis 42 %","bis 42 %","unter 7 %","20–49 %","33–38 %","27–33 %"],
- ["Natur","Heide, Dünen, Fluss","wie A","Maare, Weinberge","Wald, Rhein, Heide","Heide, Auen, Siebengebirge","Siebengebirge, Vorgebirge, Seen"],
- ["Komoot Lob / Warnung","24 % / 3 %","24 % / 3 %","11 % / 5 %*","13 % / 5 %","15 % / 6 %**","13 % / 4 %**"],
- ["Niki","Auto + 26 km Rad","schon in Maastricht","Zug nach Cochem","Zug nach Siegburg","—","—"],
- ["Unterkünfte","Mi 59–130 €, Do 51–119 €","Mi wie A, Do Freundin","nur Cochem geprüft","Freunde / Siegburg","Freunde Südstadt","Freunde Südstadt"],
- ["Heimweg","Aachen RE, 1 h","wie A","Koblenz RE5, 1:12 h","per Rad","RE5 Bad Godesberg, 30 min","per Rad"]];
-const BEST={1:[0,1],2:[0,1],5:[0,1],6:[0,1],7:[4,5]};
+ ["Tage auf dem Rad","4","4","3","3","2 (+ Zug hin)","2 (+ Zug heim)","2 (+ Zug hin)"],
+ ["km je Tag","57 / 51 / 38 / 41","57 / 60 / 54 / 41","78 / 74 / 53","74 / 75 / 47","43 / 56","55 / 39","47 / 58"],
+ ["Höhenmeter max.","202","202","480","497","460","490","490"],
+ ["Schotter-Anteil","bis 42 %","bis 42 %","unter 7 %","20–49 %","ca. 22–35 %","33–38 %","27–33 %"],
+ ["Natur","Heide, Dünen, Fluss","wie A","Maare, Weinberge","Wald, Rhein, Heide","Rhein, Siebengebirge, Heide","Heide, Auen, Siebengebirge","Siebengebirge, Vorgebirge, Seen"],
+ ["Komoot Lob / Warnung","24 % / 3 %","24 % / 3 %","11 % / 5 %*","13 % / 5 %","14 % / 6 %**","15 % / 6 %**","13 % / 4 %**"],
+ ["Niki","Auto + 26 km Rad","schon in Maastricht","Zug nach Cochem","Zug nach Siegburg","—","—","—"],
+ ["Unterkünfte","Mi 59–130 €, Do 51–119 €","Mi wie A, Do Freundin","nur Cochem geprüft","Freunde / Siegburg","Freunde Südstadt","Freunde Südstadt","Freunde Südstadt"],
+ ["Heimweg","Aachen RE, 1 h","wie A","Koblenz RE5, 1:12 h","per Rad","per Rad","RE5 Bad Godesberg, 30 min","per Rad"]];
+const BEST={1:[0,1],2:[0,1],5:[0,1],6:[0,1],7:[4,5,6]};
 
 const map=L.map("map",{scrollWheelZoom:false});
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:18,attribution:"© OpenStreetMap"}).addTo(map);
