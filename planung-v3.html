@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Gravel Herbst 26 · Entscheidung</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+:root{--bg:#f6f5f2;--card:#fff;--ink:#1d2321;--mut:#5d6663;--line:#e3e1dc;--acc:#e4572e;--ok:#10875e;--warn:#b9770e;--bad:#c0392b}
+@media (prefers-color-scheme:dark){:root{--bg:#141716;--card:#1e2221;--ink:#e9ece9;--mut:#9aa39f;--line:#2e3432;--warn:#f3a712}}
+*{box-sizing:border-box}body{margin:0;font:15px/1.5 -apple-system,system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+header{padding:14px 16px 8px;background:#1d2321;color:#fff}header h1{margin:0;font-size:19px}header p{margin:2px 0 0;font-size:13px;opacity:.8}header a{color:#f3a712}
+main{max-width:900px;margin:0 auto;padding:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0}
+h2{font-size:17px;margin:0 0 6px}h3{font-size:15px;margin:12px 0 4px}
+.mut{color:var(--mut);font-size:13.5px}.small{font-size:12.5px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
+.chip{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:6px 12px;font-size:13.5px;cursor:pointer}
+.chip.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.pill{display:inline-block;font-size:12px;padding:2px 8px;border-radius:99px;background:var(--line);margin:2px 4px 2px 0}
+.pill.ok{background:#10ac8433;color:var(--ok)}.pill.warn{background:#f3a71233;color:var(--warn)}.pill.bad{background:#c0392b26;color:var(--bad)}
+#map{height:62vh;min-height:360px;border-radius:12px;border:1px solid var(--line)}
+.legend span{display:inline-block;margin-right:10px;font-size:12.5px}.legend i{display:inline-block;width:18px;height:4px;border-radius:2px;vertical-align:middle;margin-right:4px}
+.tw{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:13.5px}td,th{padding:5px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{font-weight:600}
+td.best{color:var(--ok);font-weight:600}
+.day{border-left:4px solid var(--line);padding-left:10px;margin:10px 0}
+.stay{display:flex;justify-content:space-between;gap:8px;padding:6px 0;border-bottom:1px dashed var(--line);font-size:13.5px}
+.stay b{font-size:14px}.price{font-weight:700;white-space:nowrap}
+a{color:var(--acc)}.q{font-style:italic}
+.leaflet-popup-content{font-size:13px;line-height:1.4}
+ul.todo{padding-left:20px;margin:4px 0}ul.todo li{margin:4px 0}
+</style>
+</head>
+<body>
+<header>
+<h1>Gravel Herbst 26 · Entscheidung</h1>
+<p>Mi 28.–Sa 31.10.2026 · Stand Mo 26.10. abends · nichts gebucht · <a href="planung-v2.html">ältere Planungsseite (v2)</a></p>
+</header>
+<main>
+
+<section class="card">
+<h2>Kurz gesagt</h2>
+<p><b>Empfehlung: Maas · Meinweg · Hoge Kempen, Variante A.</b> Mittwoch mit dem Zug nach Dalheim, durch den Nationalpark Meinweg und an den Maasplassen entlang nach Thorn bzw. Maasbracht. Donnerstag ein kurzer Tag über Maaseik und die Grensmaas nach Terhills/Maasmechelen, mit optionaler Heide-Schleife. Freitag mit Niki durch die Hoge Kempen nach Maastricht zur Freundin, Samstag durchs Geultal nach Aachen und mit dem RE heim.</p>
+<p>Alle Tage bleiben unter 60 km und fast flach, die Fahrzeit liegt bei 13 km/h zwischen 3 und 4½ Stunden. Niki braucht keinen Zug: Sie fährt mit dem Auto nach Maastricht und von dort 26 km per Rad zu dir.</p>
+<p><b>Kurzfassung mit nur zwei Tagen und Siebengebirge</b> (Mi und Do, Nacht bei Freunden in der Bonner Südstadt, ein Stück mit dem Zug), vier Varianten: <b>KB6 (empfohlen)</b> 30 min Zug nach Bad Godesberg, Fähre nach Königswinter, sanft durchs Siebengebirge (41 km, 365 Hm), am Rhein zurück nach Bonn, Do flach heim. <b>KB5</b> mit dem Zug nach Remagen, Fähre nach Linz, Siebengebirge von Süden, Do flach heim. <b>KB3</b> Mi flach ab Haustür, Do bei Sonne ins Siebengebirge, Zug ab Bad Godesberg heim. <b>KB4</b> Zug bis Siegburg, Siebengebirge, Do über Vorgebirge und Ville heim.</p>
+<p class="mut">Wetter Mi–Sa (Open-Meteo): trocken, 2–15 °C, wenig Wind, morgens Nebel. Maas-Abfluss (GloFAS-Modell): Spitze 182 m³/s am Di, danach fallend auf 123 (Do) und 75 (Sa), also kein Hochwasser zu erwarten. Seit der Zeitumstellung geht die Sonne gegen 17:15 unter, ab 18 Uhr ist es dunkel.</p>
+</section>
+
+<section class="card">
+<h2>Karte</h2>
+<div class="chips" id="chips"></div>
+<div id="map"></div>
+<div class="legend small" id="legend"></div>
+<p class="mut small">Gestrichelt = Alternative. Kreis = Unterkunft Mi→Do, Raute = Unterkunft Do→Fr. Hohl gezeichnete Marker stehen nur ungefähr (Ortsmitte).</p>
+</section>
+
+<section class="card" id="detail"></section>
+
+<section class="card">
+<h2>Vergleich</h2>
+<div class="tw"><table id="cmp"></table></div>
+<p class="mut small">Fahrzeit = reine Fahrzeit bei 13 km/h, ohne Pausen. Komoot = Anteil lobender bzw. warnender Tipps an Highlights höchstens 100 m vom Track, per Stichwort gezählt (*an der Mosel sind die „Warnungen“ fast alle Weinlagen-Texte mit „steil“; **bei KB betreffen sie meist Singletrails neben der Route oder Burg-Geschichte, echte Hinweise: Matsch nach Regen, nasses Laub am Kendenicher Anstieg).</p>
+</section>
+
+<section class="card">
+<h2>Bis Mittwoch zu erledigen</h2>
+<ul class="todo">
+<li><b>Mi-Unterkunft buchen:</b> ’t Smedenhuys Maasbracht, 59 € mit Frühstück. Kostenlos stornierbar bis Mi 28.10. 18:00.</li>
+<li><b>Do-Unterkunft wählen.</b> Achtung: Porta Cité ist nur bis <b>Di 27.10.</b> kostenlos stornierbar. De Wissen über Airbnb ist nicht erstattbar.</li>
+<li>Bei der Do-Unterkunft nach einem abschließbaren Radplatz fragen.</li>
+<li>Mit Niki klären: Auto nach Maastricht und per Rad nach Terhills, Fr früh oder schon Do abends.</li>
+<li>Mi abends den Maas-Pegel prüfen (waterinfo.rws.nl), wegen der Wege am Grensmaas-Ufer.</li>
+<li>Reifen ab etwa 40 mm, Licht und Powerbank einpacken.</li>
+<li>GPX aufs Gerät laden (Links in den Tagesabschnitten).</li>
+</ul>
+</section>
+
+<p class="mut small" style="text-align:center">Karte © OpenStreetMap-Mitwirkende · Routen: eigene GPX · Unterkünfte geprüft am 26.10.2026 auf Booking und Airbnb, ohne Anmeldung</p>
+</main>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="data3.js"></script>
+<script>
+const DAYC={0:"#8e44ad",1:"#e4572e",2:"#f3a712",3:"#2e86de",4:"#10875e"};
+const DAYN={0:"Niki",1:"Mi",2:"Do",3:"Fr",4:"Sa"};
+const SPEED=13;
+const fmtH=km=>{const m=Math.round(km/SPEED*60);return Math.floor(m/60)+":"+String(m%60).padStart(2,"0")+" h"};
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+const V={
+MA:{name:"Maas A (Empfehlung)",short:"MA",stays:true,
+ sum:"Vier entspannte Tage mit viel Natur: Nationalpark Meinweg, Maasplassen, Grensmaas, Heide der Hoge Kempen, Geultal. Keine Nacht doppelt, nur Fr→Sa bei der Freundin in Maastricht. Höchstes Komoot-Lob aller Varianten.",
+ days:[
+  {d:1,files:["MM-1-","MM-1alt-"],t:"Zug RB27 Köln 07:25 → Rheydt, weiter mit RB34 bis Dalheim (an 08:55). Durch den Nationalpark Meinweg (Heide, Kiefernwald, ca. 1 km Tiefsand an der Dalheimer Mühle, kurz schieben), über Roermond an die Maasplassen und bis Thorn, das „weiße Städtchen“. Übernachtung Thorn oder 4 km weiter in Maasbracht.",train:"RB27 07:25 → RB34 Dalheim 08:55",alt:"Alternative ab Venlo durch die Heldense Bossen und das Leudal, 51 km, weniger Sand."},
+  {d:2,files:["MM-A2a-","MM-A2b-"],t:"Kurzer Tag: Thorn → Maaseik (Altstadt, gut zum Mittagessen) → am Grensmaas-Ufer durch Negenoord nach Terhills. Nachmittags optional die Schleife über die Mechelse Heide und die Kikmolen, ohne Gepäck."},
+  {d:0,files:["MM-NIKI-"],t:"Niki fährt mit dem Auto nach Maastricht, lässt es dort stehen und radelt den Maasdeich hinauf nach Terhills. Fr früh (ca. 2 h) oder schon Do abends, dann übernachtet sie mit."},
+  {d:3,files:["MM-A3-"],t:"Mit Niki: Terhills → Mechelse Heide → „Fietsen door de Heide“ → Kasteel Pietersheim → Maastricht. Im Nationalpark Hoge Kempen nur auf markierten Rad- und MTB-Wegen fahren; auf etwa 1,5 km fehlt die Markierung, dort die Beschilderung beachten. Nacht bei der Freundin."},
+  {d:4,files:["MM-4a-","MM-4b-"],t:"Allein heim: durchs Geultal über Meerssen, Valkenburg und Gulpen, dann das Selzerbeektal hinauf nach Vaals und Aachen Hbf. 96 % Asphalt. Zurück mit RE1 (:51) oder RE9 (:18) nach Köln.",train:"Aachen Hbf → Köln: RE1 xx:51 / RE9 xx:18",alt:"Kürzer: bis Bahnhof Heerlen 26 km, dann RE18 über Aachen."}],
+ risks:[["ok","flach, max. ~200 Hm"],["ok","Niki ohne Zug"],["warn","1 km Tiefsand Mi"],["warn","Do-Unterkunft eher teuer"],["warn","Hoge Kempen: nur markierte Wege"]]},
+MC:{name:"Maas C (Referenz)",short:"MC",stays:true,
+ sum:"Wie A, aber Donnerstag schon bis Maastricht und Freitag eine Rundtour ab Maastricht. Das bedeutet zwei Nächte in Maastricht, was du eigentlich nicht willst. Nur als Referenz, falls sich bei Do nichts Gutes findet.",
+ days:[
+  {d:1,files:["MM-1-"],t:"Wie A: Zug nach Dalheim, Meinweg, Maasplassen, Thorn."},
+  {d:2,files:["MM-2-"],t:"Thorn → Maaseik → Grensmaas → Terhills → Maastricht. Fast 60 km, flach. Nacht bei der Freundin."},
+  {d:3,files:["MM-3-"],t:"Mit Niki eine Runde ab Maastricht über Pietersheim, Mechelse Heide und Kikmolen zurück. Niki braucht weder Auto-Fahrt noch Zug, sie ist schon da."},
+  {d:4,files:["MM-4a-"],t:"Wie A: Geultal nach Aachen."}],
+ risks:[["ok","keine Do-Unterkunft nötig"],["bad","2 Nächte Maastricht"],["warn","Do knapp 60 km"]]},
+MO3:{name:"Mosel MO3",short:"MO3",stays:false,
+ sum:"Das stärkste Landschaftserlebnis: Vulkaneifel mit Maaren und Viadukten, dann die Steillagen der Mosel. Aber zu über 90 % Asphalt, Etappen von 74–78 km und am Mittwoch 480 Hm. Mit Maastricht als Ziel am Freitag passt sie nicht zusammen.",
+ days:[
+  {d:1,files:["MO3-1-"],t:"Zug RE22 Köln 07:21 → Gerolstein 09:02. Über Daun und die Maare (Schalkenmehren, Gillenfeld) auf den Maare-Mosel-Radweg (alte Bahntrasse, Viadukte, Tunnel) hinab nach Bernkastel-Kues. Morgens um 4 °C auf 600 m.",train:"RE22 07:21 → Gerolstein 09:02"},
+  {d:2,files:["MO1-2-"],t:"Bernkastel → Traben-Trarbach → Marienburg → am Calmont vorbei → Cochem. Moselradweg, oft neben der Straße."},
+  {d:3,files:["MO1-3-"],t:"Mit Niki (Köln 08:32 → Cochem 10:41): Cochem → Treis-Karden → Kobern → Koblenz, Zug RE5 heim (1:12 h)."}],
+ risks:[["ok","Panorama"],["bad","74–78 km/Tag"],["warn","kaum Gravel, viel Straße"],["warn","Unterkünfte nur Cochem geprüft"],["bad","passt nicht zu Maastricht"]]},
+S2L:{name:"S2 lang (Köln–Bonn)",short:"S2L",stays:false,
+ sum:"Ab der Haustür: Ville-Seen, Kottenforst, Rhein, Siebengebirge, Wahner Heide. Logistisch am sichersten (Freunde in Bonn), aber wenig neue Natur und der Donnerstag mit 75 km und 497 Hm ist zu hart. Rückfallebene.",
+ days:[
+  {d:1,files:["S2L-1-"],t:"Per Rad ab Köln über die Ville-Seen und den Kottenforst nach Bad Godesberg, durch die Rheinaue in die Bonner Südstadt (Freunde)."},
+  {d:2,files:["S2L-2-"],t:"Bonn → Remagen → Fähre Linz → Annatal → Löwenburg → Heisterbach → Ennert → Siegburg. Der härteste Tag aller Varianten."},
+  {d:3,files:["S2L-3-"],t:"Mit Niki (RE9 08:22 → Siegburg 08:45): Agger und Sülz, Lohmarer Wald, Wahner Heide, Königsforst, Köln Hbf."}],
+ risks:[["ok","keine Anreise"],["bad","Do 75 km / 497 Hm"],["warn","Waldwege nach Regen weich"],["warn","wenig Neues"]]},
+KB6:{name:"2 Tage Bonn · Zug nach Godesberg, Siebengebirge sanft (neu, empfohlen)",short:"KB6",stays:false,
+ stayNote:"Mi→Do bei den Freunden in der Bonner Südstadt, keine Buchung nötig.",
+ sum:"Ergebnis der Komoot-Recherche zu den Südteil-Varianten. Mittwoch nur 30 Minuten Zug bis Bad Godesberg, mit der Fähre nach Königswinter (Drachenfelsblick), dann über den sanftesten Zugang ins Siebengebirge: Heisterbacher Tal, Klosterruine Heisterbach, Margarethenhöhe, Löwenburger Hof. Hinunter durchs Annatal nach Bad Honnef und die letzten 15 km offen am Rhein entlang zurück nach Bonn, nicht durch den Wald. 95 Hm weniger als KB5, steilste Rampe nur gut 8 %, nirgends schieben. Donnerstag flach per Rad heim.",
+ days:[
+  {d:1,files:["KB5x-godesberg-","KB5x-remagen-"],t:"Zug Köln Hbf → Bad Godesberg. Rheinufer Mehlem → Fähre nach Königswinter → Oberdollendorf → Heisterbacher Tal (sanft, Schotter) → Klosterruine Heisterbach (Klostergaststätte) → 900 m L268 mit Autos → Mantelweg → Einkehrhaus Waidmannsruh → Margarethenhöhe → Löwenburger Hof → Annatal bergab (Schotter, nasses Laub: langsam!) → Bad Honnef → Rheinpromenade mit Drachenfelsblick → Königswinter → Beuel → Kennedybrücke → Südstadt. Bei Müdigkeit ab der Klosterruine (km 12) zurück zum Rhein, dann ca. 28 km.",
+   alt:"Plan B, falls es nass ist oder die Fähre nicht fährt: ab Remagen mit der Fähre nach Linz, am Rhein bis Königswinter, Heisterbacher Tal, Ennert, Bonn (44 km, nur 227 Hm, ohne Löwenburg und Margarethenhöhe).",
+   quotes:["„Fähre mit tollem Ausblick: auf den Drachenfelsen und auf den Petersberg“ (2019)","„Tolle Auffahrt ab Oberdollendorf … Vor allem im Herbst wunderschön“ (Heisterbacher Tal, 2024)","„Die Baumalleen sind eine Wucht“ (Rheinpromenade Königswinter, 2021)"],
+   train:"RE5 Köln Hbf 08:32 → Bad Godesberg 09:02 (stündlich, dazu RB26/RB48). Ankunft Südstadt etwa 14:00–14:30"},
+  {d:2,files:["KB1-2-","KB2-2-"],t:"Bonn-Südstadt → Kennedybrücke → Beuel → am Rhein zur Siegmündung → Siegaue → Wahner Heide → Königsforst → Köln. Nur 86 Hm.",
+   alt:"Alternativ mit mehr Aussicht: über Venusberg, Vorgebirge und Ville-Seen heim (57,5 km, 335 Hm).",
+   quotes:["„Vom Aggerdamm hat man eine gute Aussicht auf die Aggerauen“","„Feinster Schotter und immer geradeaus; also mal Speedgraveln durch den Wald“"],
+   train:"Abkürzen: ab Troisdorf S12/RE9 nach Köln"}],
+ risks:[["ok","sanftester Aufstieg, max. 8 %"],["ok","Ende am Rhein, kein Wald"],["ok","nur 30 min Zug"],["warn","900 m L268 mit Autos"],["warn","Annatal bergab mit Laub"],["warn","Fährzeiten/Einkehr ungeprüft"],["warn","Freigabe Mantelweg nur per OSM geprüft, Schilder beachten"]]},
+KB5:{name:"2 Tage Bonn · Zug nach Süden, Siebengebirge, Heide heim",short:"KB5",stays:false,
+ stayNote:"Mi→Do bei den Freunden in der Bonner Südstadt, keine Buchung nötig.",
+ sum:"Mittwoch mit dem Zug nach Remagen (oder Sinzig mit Start an der Ahrmündung, +1 km), mit der Fähre nach Linz und am rechten Rheinufer über Unkel nach Bad Honnef. Dann durchs Annatal hinauf ins Siebengebirge, über Löwenburger Hof, Margarethenhöhe und Heisterbach und durch den Ennert hinunter nach Bonn. Donnerstag fast flach per Rad heim, an der Sieg entlang und durch Wahner Heide und Königsforst. Die ganze Tour läuft so in eine Richtung nach Norden. Der Zug kommt nur einmal morgens, der Bergtag liegt vorne und der Heimweg ist flach.",
+ days:[
+  {d:1,files:["KB5-1-"],t:"Zug Köln Hbf → Remagen. Am Rhein zur Fähre Kripp–Linz (alle 15 min) → Altstadt Linz (Fachwerk, gut für einen Kaffee) → Blick auf Burg Ockenfels → Erpel unter der Erpeler Ley (Marktplatz mit Fachwerk) → Unkel → Rheinbreitbach → Bad Honnef → Annatal bergauf (steil, mit Gepäck evtl. ein Stück schieben) → Löwenburger Hof → Margarethenhöhe → Klosterruine Heisterbach → Ennert → Beuel → Kennedybrücke → Südstadt. Die ersten ~17 km sind flacher Rheinradweg, die 460 Hm kommen alle danach.",
+   quotes:["„Man glaubt kaum, dass man nicht allzu weit von Köln-Bonn entfernt ist. Das mittlere Rheintal ist auf jeden Fall einen Besuch wert“ (Kripp, 2024)","„Ein wunderschöner Marktplatz mit vielen hübschen Fachwerkhäusern“ (Erpel, 2025)","„Idyllischer Waldweg durch den Ennert“"],
+   train:"RE5 Köln Hbf 08:32 → Remagen 09:17 (stündlich :32), alternativ RB26 :56 → :48"},
+  {d:2,files:["KB1-2-","KB2-2-"],t:"Bonn-Südstadt → Kennedybrücke → Beuel → am Rhein zur Siegmündung → Siegaue → Wahner Heide → Königsforst → Köln. Nur 86 Hm, gut für müde Beine nach dem Bergtag.",
+   alt:"Alternativ mit mehr Aussicht: über Venusberg, Vorgebirge und Ville-Seen heim (57,5 km, 335 Hm).",
+   quotes:["„Vom Aggerdamm hat man eine gute Aussicht auf die Aggerauen“","„Feinster Schotter und immer geradeaus; also mal Speedgraveln durch den Wald“"],
+   train:"Abkürzen: ab Troisdorf S12/RE9 nach Köln"}],
+ risks:[["ok","Rhein, Fähre, Siebengebirge"],["ok","Zug nur morgens"],["ok","Do flach"],["warn","Annatal steil bergauf"],["warn","Siebengebirge am grauen Mi"]]},
+KB3:{name:"2 Tage Bonn · Heide + Siebengebirge",short:"KB3",stays:false,
+ stayNote:"Mi→Do bei den Freunden in der Bonner Südstadt, keine Buchung nötig.",
+ sum:"Mittwoch ab der Haustür fast flach durch Königsforst, Wahner Heide und Aggeraue nach Siegburg und an der Sieg entlang nach Bonn. Donnerstag mit frischen Beinen und bei angesagtem Sonnenschein ins Siebengebirge: Ennert, Klosterruine Heisterbach, Margarethenhöhe, Löwenburger Hof, hinunter durchs Rhöndorfer Tal an den Rhein, mit der Fähre Rolandseck hinüber und vom Bahnhof Bad Godesberg mit dem RE5 heim. Der Bergtag ist kurz, und am Ende wartet der Zug.",
+ days:[
+  {d:1,files:["KB2-1-"],t:"Köln über die Hohenzollernbrücke → Königsforst („feinster Schotter, immer geradeaus“) → Wahner Heide (Heide, ehemalige Kiesgruben, Aussicht vom Busenberg) → Aggerdamm und Aggeraue → Siegburg mit Michaelsberg (gut zum Mittagessen) → Siegaue → Rheinradweg → Kennedybrücke → Südstadt. Nur 170 Hm.",
+   quotes:["„Wie gemacht fürs Gravelbike: abwechslungsreicher Weg oberhalb der Sülz und entlang der Agger“","„Wunderschöne Ecke vor den Toren von Köln/Bonn. Insbesondere bei Trockenheit sehr gut zu befahren“"],
+   train:"Abkürzen: ab Troisdorf oder Siegburg S12/RE9 nach Bonn"},
+  {d:2,files:["KB3-2-"],t:"Südstadt → Kennedybrücke → Beuel → Ennert (Waldwege, Schleifenfelsweg) → Klosterruine Heisterbach → Margarethenhöhe → Löwenburger Hof bzw. Einkehrhaus Waidmannsruh → Rhöndorfer Tal hinunter (steil, Schotter mit Laub, notfalls schieben) → Rhöndorf → am Rhein mit Blick auf den Drachenfels → Fähre Bad Honnef–Rolandseck → linkes Ufer → Bahnhof Bad Godesberg. 490 Hm, fast alle zwischen km 8 und 24.",
+   quotes:["„Idyllischer Waldweg durch den Ennert“","„Tolle Aussicht auf den Petersberg, den Drachenfels, Schloss Drachenburg“"],
+   train:"Heim: Bad Godesberg → Köln Hbf mit RE5 oder RB26/RB48, ca. 30 min, mehrmals stündlich"}],
+ risks:[["ok","Siebengebirge bei Sonne"],["ok","Mi flach"],["ok","Bergtag kurz, Zug am Ende"],["warn","Do 490 Hm"],["warn","Rhöndorfer Tal steil bergab"]]},
+KB4:{name:"2 Tage Bonn · Siebengebirge + Ville",short:"KB4",stays:false,
+ stayNote:"Mi→Do bei den Freunden in der Bonner Südstadt, keine Buchung nötig.",
+ sum:"Mittwoch mit dem Zug bis Siegburg und von dort direkt ins Siebengebirge (dieselbe Strecke wie bei KB3, nur ab Siegburg), über die Fähre Rolandseck und durch die Rheinaue in die Südstadt. Donnerstag über den Venusberg und die Aussichtswege am Vorgebirge, durch die Ville-Seen zurück nach Köln. Dadurch siehst du mehr verschiedene Landschaften, aber der Bergtag ist der erste und fällt auf den eher grauen Mittwoch.",
+ days:[
+  {d:1,files:["KB4-1-"],t:"Zug Köln Hbf → Siegburg (S12/RE9, ca. 25 min). Siegaue → Ennert → Heisterbach → Margarethenhöhe → Löwenburger Hof → Rhöndorfer Tal hinunter → Rhöndorf → Fähre Rolandseck → Bad Godesberg → Rheinaue → Südstadt. 490 Hm.",
+   quotes:["„Herrlicher Blick auf den Drachenfels vom Rheinufer aus. Eine Strecke mit Ausblick zum Genießen“","„Mitten im Wald, nur zu Fuß bzw. Rad zu erreichen, liegt das urige Einkehrhaus Waidmannsruh“"],
+   train:"Zug hin: Köln Hbf → Siegburg/Bonn, S12 oder RE9, mehrmals stündlich"},
+  {d:2,files:["KB2-2-"],t:"Bonn-Südstadt → Venusberg hinauf → Kottenforst-Rand → Aussichtswege über Alfter, Brenig und Bornheim mit Blick auf Bonn, Siebengebirge und Eifel → Rösberg → Ville-Seen (Heider Bergsee) → Hürth → Decksteiner Weiher → Köln.",
+   quotes:["„Herrlicher Blick auf Bonn vor dem Siebengebirge!“","„Die Dobschleider Straße ist eine wunderbare ruhige Strecke durch Felder und Wald“"],
+   train:"Abkürzen: ab Brühl, Bornheim (Linie 18) oder Hürth-Kalscheuren nach Köln"}],
+ risks:[["ok","meiste Abwechslung"],["ok","Wald nicht am Schluss"],["warn","Bergtag zuerst, 490 Hm"],["warn","Mi eher grau"],["warn","Rhöndorfer Tal steil bergab"]]}
+};
+const COND_KB=`<h3>Wetter und Untergrund</h3>
+<p class="small">Mi 28.10.: trocken, 7–15 °C, Böen bis 28 km/h. Do 29.10.: sonnig, 5–14 °C, kaum Wind (Open-Meteo, Stand Di 27.10.). Sonnenuntergang 17:13.</p>
+<p class="small">Am Sonntag sind 17–33 mm Regen gefallen, in den letzten zehn Tagen rund 60 mm, und der Boden ist laut Modell noch feucht. Die Strecken bestehen trotzdem zu etwa zwei Dritteln aus Asphalt und Radwegen, der Rest ist überwiegend fester Schotter (Königsforst, Aggerdamm, Ville). Wirklich weich sind je Tag nur 3–6 km: in der Wahner Heide sandige Wege (trocknen schnell), im Kottenforst gut 2 km Waldboden (lehmig, nach Regen schmierig) und ein kurzes Stück in der Aggeraue bei Siegburg. Im Siebengebirge sind die Wege Schotter und Waldweg; die Abfahrt durchs Rhöndorfer Tal hat bis 15 % Gefälle, mit nassem Laub langsam fahren oder schieben. Radfahren ist im Naturschutzgebiet nur auf freigegebenen Wegen erlaubt (gelbes Dreieck); die Route nutzt die in Runde 5 geprüften Wege. Zwischen Ennert und Eulenberg weidet eine Ziegenherde mit Herdenschutzhunden. Im Oktober und November sind Drückjagden üblich, Absperrungen beachten. Am Wochenende gab es Sturmböen bis 70 km/h, im Wald kann also noch Bruchholz liegen. Nasses Laub auf den Abfahrten ist rutschig.</p>`;
+const CMP=[
+ ["Tage auf dem Rad","4","4","3","3","2 (+ Zug hin)","2 (+ Zug hin)","2 (+ Zug heim)","2 (+ Zug hin)"],
+ ["km je Tag","57 / 51 / 38 / 41","57 / 60 / 54 / 41","78 / 74 / 53","74 / 75 / 47","41 / 56","43 / 56","55 / 39","47 / 58"],
+ ["Höhenmeter max.","202","202","480","497","365","460","490","490"],
+ ["Schotter-Anteil","bis 42 %","bis 42 %","unter 7 %","20–49 %","17–35 %","ca. 22–35 %","33–38 %","27–33 %"],
+ ["Natur","Heide, Dünen, Fluss","wie A","Maare, Weinberge","Wald, Rhein, Heide","Rhein, Fähre, Siebengebirge, Heide","Rhein, Siebengebirge, Heide","Heide, Auen, Siebengebirge","Siebengebirge, Vorgebirge, Seen"],
+ ["Komoot Lob / Warnung","24 % / 3 %","24 % / 3 %","11 % / 5 %*","13 % / 5 %","siehe Recherche 13b","14 % / 6 %**","15 % / 6 %**","13 % / 4 %**"],
+ ["Niki","Auto + 26 km Rad","schon in Maastricht","Zug nach Cochem","Zug nach Siegburg","—","—","—","—"],
+ ["Unterkünfte","Mi 59–130 €, Do 51–119 €","Mi wie A, Do Freundin","nur Cochem geprüft","Freunde / Siegburg","Freunde Südstadt","Freunde Südstadt","Freunde Südstadt","Freunde Südstadt"],
+ ["Heimweg","Aachen RE, 1 h","wie A","Koblenz RE5, 1:12 h","per Rad","per Rad","per Rad","RE5 Bad Godesberg, 30 min","per Rad"]];
+const BEST={1:[0,1],2:[0,1],5:[0,1],6:[0,1],7:[4,5,6,7]};
+
+const map=L.map("map",{scrollWheelZoom:false});
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:18,attribution:"© OpenStreetMap"}).addTo(map);
+let layer=L.layerGroup().addTo(map);
+const tr=(opt,pref)=>TRACKS.find(t=>t.opt===opt&&t.file.startsWith(pref));
+
+function stayPopup(s){return `<b>${esc(s.name)}</b><br>${esc(s.ort)} · Nacht ${esc(s.nacht)}→ · <b>${s.preis_eur} €</b><br>Bewertung ${esc(s.bewertung)}<br>Rad: ${esc(s.rad)}<br>Frühstück: ${esc(s.fruehstueck)}<br>Storno: ${esc(s.storno)}${s.ungefaehr?"<br><i>Lage ungefähr</i>":""}<br><a href="${esc(s.link)}" target="_blank" rel="noopener">Angebot öffnen (${esc(s.quelle)})</a>`}
+
+function draw(opt){
+ layer.clearLayers();const b=[];
+ TRACKS.filter(t=>t.opt===opt).forEach(t=>{
+  const l=L.polyline(t.pts,{color:DAYC[t.day],weight:t.alt?3:5,opacity:.9,dashArray:t.alt?"6 7":null})
+   .bindPopup(`<b>${esc(t.label)}</b><br>${t.km} km · ${t.hm} Hm · ${t.gravel} % Schotter · ${fmtH(t.km)}<br><a href="gpx/${esc(t.file)}" download>GPX</a>`);
+  layer.addLayer(l);b.push(...t.pts);});
+ if(V[opt].stays){
+  STAYS.filter(s=>s.lat!=null&&(opt==="MA"||s.nacht==="Mi")).forEach(s=>{
+   const col=s.nacht==="Mi"?DAYC[1]:DAYC[2];
+   const m=s.nacht==="Mi"
+    ?L.circleMarker([s.lat,s.lon],{radius:7,color:"#000",weight:1.5,fillColor:col,fillOpacity:s.ungefaehr?.15:.95})
+    :L.marker([s.lat,s.lon],{icon:L.divIcon({className:"",iconSize:[14,14],html:`<div style="width:13px;height:13px;transform:rotate(45deg);border:1.5px solid #000;background:${s.ungefaehr?"transparent":col}"></div>`})});
+   m.bindPopup(stayPopup(s));m.bindTooltip(`${s.preis_eur} € · ${s.name}`);layer.addLayer(m);b.push([s.lat,s.lon]);});
+ }
+ if(b.length)map.fitBounds(b,{padding:[20,20]});
+ const days=[...new Set(TRACKS.filter(t=>t.opt===opt).map(t=>t.day))].sort();
+ document.getElementById("legend").innerHTML=days.map(d=>`<span><i style="background:${DAYC[d]}"></i>${DAYN[d]}</span>`).join("");
+}
+
+function detail(opt){
+ const v=V[opt];let h=`<h2>${esc(v.name)}</h2><p>${esc(v.sum)}</p><div>${v.risks.map(r=>`<span class="pill ${r[0]}">${esc(r[1])}</span>`).join("")}</div>`;
+ v.days.forEach(d=>{
+  const ts=d.files.map(f=>tr(opt,f)).filter(Boolean);
+  h+=`<div class="day" style="border-color:${DAYC[d.d]}"><h3>${DAYN[d.d]}</h3><p>${esc(d.t)}</p>`;
+  if(d.train)h+=`<p class="small">🚆 ${esc(d.train)}</p>`;
+  if(d.alt)h+=`<p class="small mut">${esc(d.alt)}</p>`;
+  if(d.quotes)h+=d.quotes.map(q=>`<p class="small q">Komoot: ${esc(q)}</p>`).join("");
+  h+=ts.map(t=>`<div class="small">${t.alt?"Alternative: ":""}${esc(t.label)} · <b>${t.km} km</b> · ${t.hm} Hm · ${t.gravel} % Schotter · ${fmtH(t.km)} · <a href="gpx/${esc(t.file)}" download>GPX</a></div>`).join("");
+  h+=`</div>`;});
+ if(v.stays){
+  ["Mi","Do"].filter(n=>opt==="MA"||n==="Mi").forEach(n=>{
+   const ss=STAYS.filter(s=>s.nacht===n).sort((a,b)=>a.preis_eur-b.preis_eur);
+   h+=`<h3>Unterkünfte ${n}→${n==="Mi"?"Do":"Fr"} (${ss.length}, nach Preis)</h3>`;
+   h+=ss.map(s=>`<div class="stay"><div><b>${esc(s.name)}</b> · ${esc(s.ort)} <span class="mut">(${esc(s.quelle)})</span><br><span class="small mut">${esc(s.bewertung)} · Rad: ${esc(s.rad)} · Frühstück: ${esc(s.fruehstueck)} · Storno: ${esc(s.storno)}</span><br><a class="small" href="${esc(s.link)}" target="_blank" rel="noopener">Angebot öffnen</a></div><div class="price">${s.preis_eur} €</div></div>`).join("");
+  });
+  if(opt==="MC")h+=`<p class="mut small">Do→Fr und Fr→Sa bei der Freundin in Maastricht.</p>`;
+ } else if(v.stayNote) h+=(opt.startsWith("KB")?COND_KB:"")+`<h3>Unterkunft</h3><p class="small">${esc(v.stayNote)}</p>`;
+ else h+=`<p class="mut small">Für diese Variante sind keine Unterkünfte online geprüft (Details in Recherche.md, Runde 8 bzw. 8b).</p>`;
+ document.getElementById("detail").innerHTML=h;
+}
+
+function pick(opt){
+ document.querySelectorAll(".chip").forEach(c=>c.classList.toggle("on",c.dataset.opt===opt));
+ draw(opt);detail(opt);
+}
+document.getElementById("chips").innerHTML=Object.keys(V).map(k=>`<button class="chip" data-opt="${k}">${esc(V[k].name)}</button>`).join("");
+document.querySelectorAll(".chip").forEach(c=>c.onclick=()=>pick(c.dataset.opt));
+
+document.getElementById("cmp").innerHTML=`<tr><th></th>${Object.keys(V).map(k=>`<th>${esc(V[k].short)}</th>`).join("")}</tr>`+
+ CMP.map((r,i)=>`<tr><th>${esc(r[0])}</th>${r.slice(1).map((c,j)=>`<td class="${(BEST[i]||[]).includes(j)?"best":""}">${esc(c)}</td>`).join("")}</tr>`).join("")+
+ `<tr><th>Fahrzeit max./Tag</th>${Object.keys(V).map(k=>{const per={};TRACKS.filter(t=>t.opt===k&&!t.alt&&t.day>0).forEach(t=>per[t.day]=(per[t.day]||0)+t.km);return `<td>${fmtH(Math.max(...Object.values(per)))}</td>`}).join("")}</tr>`;
+pick("MA");
+</script>
+</body>
+</html>
