@@ -71,7 +71,7 @@ ul.todo{padding-left:20px;margin:4px 0}ul.todo li{margin:4px 0}
 <section class="card">
 <h2>Bis Donnerstag zu klären</h2>
 <ul class="todo">
-<li><b>AR:</b> Die Freunde in der Südstadt fragen, ob du Do→Fr und Fr→Sa bleiben kannst. Den Stand am Ahr-Radweg prüfen (Recherche Runde 15). GPX in Komoot importieren.</li>
+<li><b>AR:</b> Die Freunde in der Südstadt fragen, ob du Do→Fr und Fr→Sa bleiben kannst. GPX in Komoot importieren. Ahr-Radweg laut ahrtal.com offen (Recherche Runde 15). Fähren Mehlem–Königswinter, Kripp–Linz und Mondorf fahren, mit Deutschlandticket bis 11.12. mit Rad kostenlos (Mondorf 2,20 €).</li>
 <li><b>Mit Niki:</b> Kommt sie am Freitag oder schon am Donnerstag dazu, und mit dem Auto (Maastricht) oder mit dem Zug (Bonn)?</li>
 <li><b>Bonn:</b> Die Freunde fragen, ob die Nacht von Donnerstag auf Freitag passt. Bisher war Mittwoch geplant. Falls Niki am Donnerstag mitfährt, auch für sie fragen.</li>
 <li><b>Maastricht:</b> Die Freundin fragen, ob Donnerstag auf Freitag passt, ob Niki mit übernachten kann und wo das Auto parken kann. Außerdem klären, ob der Radträger zwei Räder trägt.</li>
@@ -81,7 +81,7 @@ ul.todo{padding-left:20px;margin:4px 0}ul.todo li{margin:4px 0}
 </ul>
 </section>
 
-<p class="mut small" style="text-align:center">Karte © OpenStreetMap-Mitwirkende · Routen: eigene GPX (BRouter) · Fährzeiten faehre-koenigswinter.de, Züge Transitous, abgerufen 27.10.2026</p>
+<p class="mut small" style="text-align:center">Karte © OpenStreetMap-Mitwirkende · Routen: eigene GPX (BRouter) · Fährzeiten faehre-koenigswinter.de, rheinfaehre-mondorf.de, rheinfaehre-linz-remagen.de, Ahr-Radweg ahrtal.com, Züge Transitous, abgerufen 27./28.10.2026</p>
 </main>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -98,14 +98,14 @@ const SO={d:5,files:["KS-"],t:"Kleine Runde ab Köln Hbf: über die Deutzer Brü
  train:"Abkürzen: ab Königsforst mit der KVB-Linie 9 zurück in die Stadt (Rad im Nahverkehr erlaubt, Fahrradticket nötig)"};
 const FAEHRE="Fähre Mehlem–Königswinter werktags 05:20–21:50 alle 8 min, Rad 3 €, mit Deutschlandticket bis 11.12.2026 kostenlos.";
 
-const AHR="Ahr-Radweg Mayschoß–Sinzig laut Outdooractive wieder durchgehend befahrbar, mit ausgeschilderten Umleitungen (Wiederaufbau nach der Flut, Stand prüfen). Zug RB30 Bonn Hbf → Ahrbrück stündlich, hält in Mayschoß.";
+const AHR="Ahr-Radweg Mayschoß–Sinzig durchgehend befahrbar, in Dernau und Bad Neuenahr-Ahrweiler über ausgeschilderte Ersatzrouten (ahrtal.com, Karte vom 24.06.2026; Abschnitt Laach–Walporzheim seit 19.06. wieder offen). In Mayschoß und Dernau Straßenbaustellen bis 13.11., der Radweg ist nicht gesperrt. Vor Ort den Schildern „Ersatzroute Ahr-Radweg“ folgen.";
 const V={
 AR:{name:"AR · Ahr – Rhein – Siebengebirge, 3 Tage (neu, Empfehlung)",short:"AR",
- stayNote:"Do→Fr und Fr→Sa bei den Freunden in der Bonner Südstadt, nichts zu buchen. Variante mit Hotel: Do in Königswinter übernachten (gestrichelte Strecken), dann fährst du am Do über die Fähre Kripp–Linz am rechten Ufer und am Fr ab Königswinter direkt in den Berg, dafür mit Siegaue und Fähre Mondorf. Unterschied: knapp 5 km weniger am Do, die Bergstrecke am Fr ohne 13 km Anlauf, ein Hotelzimmer mehr.",
+ stayNote:"Do→Fr und Fr→Sa bei den Freunden in der Bonner Südstadt, nichts zu buchen. Variante mit Hotel: Do in Königswinter übernachten (gestrichelte Strecken), dann fährst du am Do über die Fähre Kripp–Linz am rechten Ufer und am Fr ab Königswinter direkt in den Berg, dafür mit Siegaue und Fähre Mondorf. Unterschied: knapp 5 km weniger am Do, die Bergstrecke am Fr ohne 13 km Anlauf, ein Hotelzimmer mehr (Königswinter ca. 100–120 €, z. B. Maritim mit Fahrradkeller). Niki käme dann nicht direkt nach Königswinter: Die rechte Rheinstrecke ist bis 11.12. gesperrt (Ersatzbus), also RE5 bis Bonn und Stadtbahn 66.",
  sum:"Drei Landschaften, jede Strecke nur einmal: das Ahrtal mit Weinbergen im Herbstlaub, das Siebengebirge mit Niki, der Rhein heim nach Köln. Niki fährt nur am Freitag mit und kommt und geht mit dem Zug ab Bonn Hbf, so ist sie Samstagfrüh in Köln. Beide Nächte in der Südstadt.",
  days:[
   {d:2,files:["AR-1-","AR-1b-"],t:"Zug nach Mayschoß. Den Ahr-Radweg hinunter über Dernau, Walporzheim, Ahrweiler (Altstadt in der Stadtmauer, gut für Kaffee) und Bad Neuenahr bis Sinzig, immer leicht bergab, links und rechts die Weinberge. An der Ahrmündung auf den Rheinradweg: Remagen, Rolandseck mit Blick auf Drachenfels und Nonnenwerth, Mehlem, Rheinaue, Südstadt. Fast nur Asphalt, 89 Hm. Wo der Radweg noch im Bau ist, gelten die ausgeschilderten Umleitungen.",
-   train:"Köln Hbf → Bonn Hbf (RE5, 22 min), dann RB30 Richtung Ahrbrück bis Mayschoß. Abkürzen: jeder Bahnhof im Ahrtal und am Rhein (Remagen, Rolandseck, Bad Godesberg). "+AHR},
+   train:"RE5 Köln Hbf ca. 07:32 → Remagen 08:15, RB32 08:48 → Mayschoß 09:22 (nächste: RE5 ca. 08:32 → Remagen 09:15, RB32 09:48 → Mayschoß 10:22). Die RB30 fährt bis 13.12. nur ab Remagen, nicht ab Bonn. Halbstündlich RB30/RB32 ab Remagen. Abkürzen: jeder Bahnhof im Ahrtal und am Rhein (Remagen, Rolandseck, Bad Godesberg). "+AHR},
   {d:3,files:["BN-2-","AR-2b-"],t:"Mit Niki ohne Gepäck: Südstadt → Rheinaue → Bad Godesberg → Fähre nach Königswinter → Heisterbacher Tal (10 km stetig bergauf, im Schnitt 3 %, ein Kilometer mit 7–8 %) → Klosterruine Heisterbach → Margarethenhöhe → Löwenburger Hof (höchster Punkt, 369 m) → Annatal 5 km bergab → Bad Honnef → am Rhein zurück → Südstadt. Niki fährt abends mit dem Zug heim.",
    quotes:["„Fähre mit tollem Ausblick: auf den Drachenfelsen und auf den Petersberg“ (2019)","„Tolle Auffahrt ab Oberdollendorf … Vor allem im Herbst wunderschön“ (Heisterbacher Tal, 2024)"],
    train:"Niki hin: RE5 Köln Hbf 08:32 → Bonn Hbf 08:54. Zurück: Bonn Hbf → Köln Hbf RE5 xx:04 (24 min), RB26 xx:33, RB48 xx:54. "+FAEHRE},
@@ -182,7 +182,7 @@ const COND=`<h3>Wetter und Untergrund</h3>
 <p class="small">Do 29.10. sonnig, 7–14 °C, Böen bis 18 km/h. Fr 30.10. sonnig, 4–13 °C. So 1.11. sonnig, 3–12 °C, kaum Wind (Open-Meteo, Stand Di 27.10. abends, Bonn und Maastricht fast gleich). Sonnenuntergang 17:10–17:17.</p>
 <p class="small">Am Sonntag 25.10. sind 17–33 mm Regen gefallen, Di/Mi kommt noch etwas Niesel dazu. Bis Donnerstag sind die Schotterwege wieder fest, morgens ist das Laub aber nass. Im Siebengebirge darfst du nur auf freigegebenen Wegen fahren (gelbes Dreieck). Zwischen Ennert und Eulenberg weidet eine Ziegenherde mit Herdenschutzhunden. In der Hoge Kempen gilt dasselbe für die markierten Wege. Nach dem Sturm vom Wochenende kann im Wald noch Bruchholz liegen. Im Oktober und November sind Drückjagden üblich, Absperrungen beachten.</p>`;
 const CMP=[
- ["Anreise Do","Zug 1:20 h, 1 Umstieg","Zug 1:30 h, 1 Umstieg","RE5 30 min","ab Haustür","RE1 52 min","Auto ca. 1:15 h"],
+ ["Anreise Do","Zug 1:50 h, 1 Umstieg","Zug 1:30 h, 1 Umstieg","RE5 30 min","ab Haustür","RE1 52 min","Auto ca. 1:15 h"],
  ["km je Tag","51 / 49 / 33","57 / 60 / 41","41 / 56","55 / 49","43 / 54","38 / 54"],
  ["Höhenmeter max.","377 (Fr)","202 (Sa)","365 (Do)","377 (Fr)","141","174"],
  ["Steilste Stelle","8,2 % (Fr)","ca. 9 % kurz (Sa)","8,2 %","8,2 %","ca. 8 %, kurz","ca. 6 %"],
